@@ -1,0 +1,52 @@
+name: habits
+base: core18
+version: '0.1.4'
+summary: An application to monitor your mouse and keyboard statistics
+description: |
+  habits monitors how far you move your mouse, how many mouse clicks you make,
+  and how many keyboard button presses you make. It stores this information on
+  a day to day basis and allows you to see historical trends of this absolutely
+  crucial and necessary data.
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: i386
+  - build-on: arm64
+  - build-on: armhf
+
+parts:
+  launcher:
+    plugin: dump
+    source: snap/local/
+  habits:
+    plugin: dump
+    source: https://github.com/atareao/habits.git
+    stage-packages:
+      - gir1.2-gtk-3.0
+      - gir1.2-glib-2.0
+      - gir1.2-gdkpixbuf-2.0
+      - gir1.2-appindicator3-0.1
+      - gir1.2-webkit2-4.0
+      - python3-xlib
+    prime:
+      - usr/lib/girepository-1.0/AppIndicator3-0.1.typelib
+      - usr/lib/*/libappindicator3.so.*
+      - usr/lib/python3/dist-packages/*
+      - src/*
+      - bin/*
+      - debian/*
+      - data/*
+
+apps:
+  habits:
+    extensions: [gnome-3-34]
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
+    command: bin/launcher
+    plugs:
+      - x11
+      - audio-playback

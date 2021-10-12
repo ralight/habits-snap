@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Habits
+Comment=Monitor your mouse/keyboard statistics
+Comment[en_US]=Monitor your mouse/keyboard statistics
+GenericName=Habits
+GenericName[en_US]=Habits
+Icon=${SNAP}/data/icons/habits.svg
+Exec=habits
+Terminal=false
+Keywords=mouse;keyboard;
